@@ -1,11 +1,14 @@
 import fP from 'fastify-plugin';
-import { FastifyPluginAsync } from 'fastify';
+import { FastifyPluginAsync, FastifyRequest, FastifyReply } from 'fastify';
 import { DataSource } from 'typeorm';
 import { User } from '../entities/user'
 import { Product } from '../entities/product'
 
 declare module 'fastify' {
     interface FastifyInstance {
+        orm: DataSource
+    }
+    export interface FastifyRequest {
         orm: DataSource
     }
 }
@@ -24,6 +27,11 @@ const typeOrmPlugin: FastifyPluginAsync = fP(async (server, options) => {
 
     server.decorate('orm', orm);
     
+    server.addHook('preHandler', (req: FastifyRequest, res: FastifyReply, next: any) => {
+        req.orm = orm
+        next()
+    })
+
     server.addHook('onClose', async (server) => {
         await server.orm.destroy()
     })

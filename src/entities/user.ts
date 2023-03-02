@@ -23,7 +23,9 @@ export class User {
     lastname: string
 
     @IsEmail()
-    @Column()
+    @Column({
+        unique: true
+    })
     email: string
 
     @Column()

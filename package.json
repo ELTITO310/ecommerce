@@ -13,6 +13,7 @@
     "@fastify/jwt": "^6.5.0",
     "@fastify/type-provider-typebox": "^2.4.0",
     "@sinclair/typebox": "^0.25.20",
+    "bcrypt": "^5.1.0",
     "chalk": "4.1.2",
     "class-validator": "^0.14.0",
     "dotenv": "^16.0.3",
@@ -28,6 +29,7 @@
     "typeorm": "^0.3.11"
   },
   "devDependencies": {
+    "@types/bcrypt": "^5.0.0",
     "@types/http-status-codes": "^1.2.0",
     "@types/ip-regex": "^4.1.1",
     "@types/node": "^18.11.18",
