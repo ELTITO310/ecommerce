@@ -5,18 +5,23 @@ dotenv.config()
 import Fastify from 'fastify';
 /* Plugins  */
 import { TypeBoxTypeProvider, TypeBoxValidatorCompiler } from '@fastify/type-provider-typebox';
-import ApiRoute from './routes/products/products.routes'
-import AuthRoute from './routes/users/users.routes'
 import typeOrmPlugin from './plugins/typeorm'
 import jwt from './plugins/jwt'
+import swagger from './plugins/swagger'
+/* Routes */
+import ApiRoute from './routes/products/products.routes'
+import AuthRoute from './routes/users/users.routes'
 /* Start */
 import logger from './utils/logger';
+
 const fastify = Fastify({
     logger: logger
 }).withTypeProvider<TypeBoxTypeProvider>().setValidatorCompiler(TypeBoxValidatorCompiler)
+
 // Plugins
 fastify.register(jwt)
 fastify.register(typeOrmPlugin);
+fastify.register(swagger)
 // Routes
 fastify.register(AuthRoute, { prefix: 'api/users' })
 fastify.register(ApiRoute, { prefix: 'api/products' });

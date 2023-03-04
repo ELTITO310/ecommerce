@@ -1,15 +1,22 @@
 import fP from 'fastify-plugin';
 import { FastifyPluginAsync, FastifyRequest, FastifyReply } from 'fastify';
-import { DataSource } from 'typeorm';
+import { DataSource, MongoRepository } from 'typeorm';
 import { User } from '../entities/user'
 import { Product } from '../entities/product'
 
 declare module 'fastify' {
     interface FastifyInstance {
-        orm: DataSource
+        db: {
+            orm: DataSource,
+            user: MongoRepository<User>,
+            product: MongoRepository<Product>,
+        }
     }
     export interface FastifyRequest {
-        orm: DataSource
+        db: {
+            user: MongoRepository<User>,
+            product: MongoRepository<Product>,
+        }
     }
 }
 
@@ -22,18 +29,28 @@ const typeOrmPlugin: FastifyPluginAsync = fP(async (server, options) => {
         synchronize: true,
         entities: [User, Product]
     })
-    
+
     orm.initialize().then((v) => server.log.info('Succesfully connected to Database'))
 
-    server.decorate('orm', orm);
+    server.decorate('db', async (req: FastifyRequest, rep: FastifyReply, done: any) => {
+        server.db = {
+            user: orm.getMongoRepository(User),
+            product: orm.getMongoRepository(Product),
+            orm: orm
+        }
+        done()
+    });
     
     server.addHook('preHandler', (req: FastifyRequest, res: FastifyReply, next: any) => {
-        req.orm = orm
+        req.db = {
+            user: orm.getMongoRepository(User),
+            product: orm.getMongoRepository(Product)
+        }
         next()
     })
 
     server.addHook('onClose', async (server) => {
-        await server.orm.destroy()
+        await server.db.orm.destroy()
     })
 })
 

@@ -8,7 +8,7 @@ export const signIn = async (req: FastifyRequest<{
 }>, rep: FastifyReply) => {
     const { email, password } = req.body
 
-    const user = await req.orm.mongoManager.findOneBy(User, { email })
+    const user = await req.db.user.findOneBy({ email })
     if(!user) {
         return rep.code(404).send({ 
             message: 'User not found'
@@ -40,9 +40,10 @@ export const signUp = async (req: FastifyRequest<{
         user.lastname = lastname
         user.email = email
         user.password = ps
-        await req.orm.mongoManager.save(user);
+        await req.db.user.save(user);
         
         return rep.code(201).send({
+            status: 201,
             message: 'User created successfully'
         })
     } catch(error: any) {
