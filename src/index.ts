@@ -5,6 +5,7 @@ dotenv.config()
 import Fastify from 'fastify';
 /* Plugins  */
 import { TypeBoxTypeProvider, TypeBoxValidatorCompiler } from '@fastify/type-provider-typebox';
+import cors from '@fastify/cors'
 import typeOrmPlugin from './plugins/typeorm'
 import jwt from './plugins/jwt'
 import swagger from './plugins/swagger'
@@ -16,12 +17,24 @@ import logger from './utils/logger';
 
 const fastify = Fastify({
     logger: logger
-}).withTypeProvider<TypeBoxTypeProvider>().setValidatorCompiler(TypeBoxValidatorCompiler)
+}).withTypeProvider<TypeBoxTypeProvider>()
 
 // Plugins
 fastify.register(jwt)
 fastify.register(typeOrmPlugin);
 fastify.register(swagger)
+// fastify.register(cors, {
+//     origin: (origin, cb) => {
+//         console.log('origin', origin)
+//         const hostname = new URL(origin).hostname
+//         console.log('hostname', hostname)
+//         if(hostname === 'localhost') {
+//             cb(null, true)
+//             return;
+//         }
+//         cb(new Error('Not allowed'), false)
+//     },
+// })
 // Routes
 fastify.register(AuthRoute, { prefix: 'api/users' })
 fastify.register(ApiRoute, { prefix: 'api/products' });

@@ -4,7 +4,7 @@ import { IsInt, MinLength, Max, Min, IsDate, isString } from 'class-validator'
 @Entity()
 export class Product {
     @ObjectIdColumn()
-    id: ObjectID
+    _id: ObjectID
 
     @MinLength(8, {
         message: 'Name is short'

@@ -4,8 +4,7 @@ import swagger from '@fastify/swagger'
 import swaggerui from '@fastify/swagger-ui'
 import { SwaggerTheme } from 'swagger-themes'
 
-import { User } from '../routes/users/users.schema'
-import { Product } from '../routes/products/products.schema'
+import { User, UserLogin } from '../routes/users/users.schema'
 
 const swaggePlugin: FastifyPluginAsync = fp(async (server, opts) => {
     
@@ -29,7 +28,6 @@ const swaggePlugin: FastifyPluginAsync = fp(async (server, opts) => {
             ],
             definitions: {
                 User,
-                Product
             },
             securityDefinitions: {
                 apiKey: {

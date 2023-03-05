@@ -6,26 +6,33 @@ import { hashPassword, verifyPassword } from '../../utils/hash'
 export const signIn = async (req: FastifyRequest<{
     Body: userLoginType
 }>, rep: FastifyReply) => {
-    const { email, password } = req.body
+    try {
+        const { email, password } = req.body
 
-    const user = await req.db.user.findOneBy({ email })
-    if(!user) {
-        return rep.code(404).send({ 
-            message: 'User not found'
-         })
-    }
+        const user = await req.db.user.findOneBy({ email })
+        if(!user) {
+            return rep.code(404).send({ 
+                message: 'User not found'
+            })
+        }
 
-    if(verifyPassword(password, user.password)) {
-        const token = req.jwt.sign({ id: user.id }, { 
-            expiresIn: 1000 * 60 * 60 * 24 * 7
+        if(verifyPassword(password, user.password)) {
+            const token = req.jwt.sign({ id: user._id.toString() }, { 
+                expiresIn: 1000 * 60 * 60 * 24 * 7
+            })
+            return { user: {
+                id: user._id.toString(),
+                name: user.name,
+                lastname: user.lastname,
+            }, token }
+        }
+
+        return rep.code(400).send({ 
+            message: 'Email or Password invalid'
         })
-        return { token }
+    } catch(err: any) {
+        rep.status(500).send({ status: 500, message: err.message })
     }
-
-    return rep.code(401).send({ 
-        message: 'Email or Password invalid'
-     })
-
 }
 
 
@@ -40,6 +47,7 @@ export const signUp = async (req: FastifyRequest<{
         user.lastname = lastname
         user.email = email
         user.password = ps
+        user.admin = false
         await req.db.user.save(user);
         
         return rep.code(201).send({

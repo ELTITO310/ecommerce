@@ -30,7 +30,8 @@ const typeOrmPlugin: FastifyPluginAsync = fP(async (server, options) => {
         entities: [User, Product]
     })
 
-    orm.initialize().then((v) => server.log.info('Succesfully connected to Database'))
+    await orm.initialize()
+    server.log.info('Succesfully connected to Database')
 
     server.decorate('db', async (req: FastifyRequest, rep: FastifyReply, done: any) => {
         server.db = {

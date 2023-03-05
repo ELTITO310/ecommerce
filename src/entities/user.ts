@@ -14,7 +14,7 @@ export class ShopCart {
 @Entity()
 export class User {
     @ObjectIdColumn()
-    id: ObjectID
+    _id: ObjectID
 
     @Column()
     name: string
@@ -31,7 +31,9 @@ export class User {
     @Column()
     password: string
     
-    @Column()
+    @Column({
+        default: false
+    })
     admin: boolean
 
     @Column((type) => ShopCart)

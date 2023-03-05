@@ -13,6 +13,7 @@ export const UserLogin = Type.Object({
 })
 
 export const returnToken = Type.Object({
+    id: Type.Optional(Type.String()),
     token: Type.String(),
     message: Type.Optional(Type.String())
 }, { 

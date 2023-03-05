@@ -6,8 +6,14 @@ export const Product = Type.Object({
     price: Type.Number({ minimum: 10, maximum: 1000000 }),
     photo: Type.String(),
     description: Type.String(),
-    createdAt: Type.Date(),
-    updateAt: Type.Date()
+    createdAt: Type.String(),
+    updateAt: Type.String()
+}, {
+    $id: 'product'
+})
+
+export const responseProduct = Type.Object({
+    products: Type.Array(Product)
 })
 
 export type ProducType = Static<typeof Product>
