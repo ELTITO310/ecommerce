@@ -39,7 +39,6 @@ fastify.register(swagger)
 fastify.register(AuthRoute, { prefix: 'api/users' })
 fastify.register(ApiRoute, { prefix: 'api/products' });
 
-
 (async() => {
     try {
         await fastify.listen({ port: ((process.env.PORT || 4000) as number) })

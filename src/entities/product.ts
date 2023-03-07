@@ -1,10 +1,11 @@
-import { Entity, ObjectID, ObjectIdColumn, Column, CreateDateColumn, UpdateDateColumn } from 'typeorm';
-import { IsInt, MinLength, Max, Min, IsDate, isString } from 'class-validator'
+import { Entity, ObjectIdColumn, Column, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import { IsInt, MinLength, Max, Min, IsDate } from 'class-validator'
+import { ObjectId } from 'mongodb'
 
 @Entity()
 export class Product {
     @ObjectIdColumn()
-    _id: ObjectID
+    id: ObjectId
 
     @MinLength(8, {
         message: 'Name is short'

@@ -8,7 +8,8 @@ declare module 'fastify' {
         jwt: JWT,
     }
     export interface FastifyInstance {
-        authenticate: any
+        authenticate: any,
+        admin: any
     }
 }
 
@@ -29,9 +30,7 @@ const jwtPlugin: FastifyPluginAsync = fp(async (server, options) => {
                     status: 401
                 })
             }
-
-            const user = await req.db.user.findOneBy(token.id)
-            user?.admin ? Object.assign(req.user, { admin: true }) : Object.assign(req.user, { admin: false }) 
+            return token;
         } catch(err: any) {
             rep.status(401).send({
                 message: 'Unauthorized',
@@ -39,6 +38,24 @@ const jwtPlugin: FastifyPluginAsync = fp(async (server, options) => {
             })
         }
     });
+
+    server.decorate('admin', async (req: FastifyRequest, rep: FastifyReply) => {
+        try {
+            const token = await server.authenticate(req, rep)
+            const user = await req.db.user.findOneBy(token.id)
+            if(!user?.admin) {
+                rep.status(403).send({
+                    message: 'Forbidden',
+                    status: 403
+                })
+            }
+        } catch(err: any) {
+            rep.status(401).send({
+                message: 'Unauthorized',
+                status: 401
+            })
+        }
+    })
 
     server.addHook('preHandler', (req: FastifyRequest, res: FastifyReply, next: any) => {
         req.jwt = server.jwt

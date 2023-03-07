@@ -1,7 +1,7 @@
 import { FastifyInstance } from 'fastify'
-import { products, edit } from './products.controller'
-import { responseProduct } from './products.schema'
-import { Error } from '../../types/api'
+import { products, edit, create } from './products.controller'
+import { responseProduct, editProduct, Product, paramsID } from './products.schema'
+import { Error, defaultReturn } from '../../types/api'
 
 export default async function routes(fastify: FastifyInstance, options: Object) {
     
@@ -18,12 +18,35 @@ export default async function routes(fastify: FastifyInstance, options: Object) 
         }
     }, products)
 
-    fastify.get('/edit/:id', {
-        preHandler: fastify.authenticate,
+    fastify.post('/create', {
+        preHandler: fastify.admin,
         schema: {
-            tags: ['products']
+            tags: ['products'],
+            body: Product,
+            response: {
+                201: defaultReturn,
+                500: {
+                    description: 'Error response',
+                    ...Error
+                }
+            }
         }
-    }, edit)
+    }, create)
 
+    fastify.put('/edit/:id', {
+        preHandler: fastify.admin,
+        schema: {
+            tags: ['products'],
+            body: editProduct,
+            params: paramsID,
+            response: {
+                200: defaultReturn,
+                500: {
+                    description: 'Error response',
+                    ...Error
+                }
+            }
+        },
+    }, edit)
 
 }

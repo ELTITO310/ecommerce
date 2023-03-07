@@ -1,5 +1,5 @@
 import { FastifyInstance } from 'fastify'
-import { returnToken, returnTokenType, User as UserCreate, UserLogin, userLoginType } from './users.schema'
+import { User as UserCreate, UserLogin } from './users.schema'
 import { signIn, signUp } from './users.controller'
 import { defaultReturn, Error } from '../../types/api'
 
@@ -10,7 +10,7 @@ export default async function routes(fastify: FastifyInstance, options: Object) 
             tags: ['user'],
             body: UserLogin,
             response: {
-                200: returnToken,
+                200: defaultReturn,
                 500: {
                     description: 'Error response',
                     ...Error

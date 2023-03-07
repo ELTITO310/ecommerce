@@ -12,14 +12,6 @@ export const UserLogin = Type.Object({
     $id: 'login'
 })
 
-export const returnToken = Type.Object({
-    id: Type.Optional(Type.String()),
-    token: Type.String(),
-    message: Type.Optional(Type.String())
-}, { 
-    $id: 'returnToken'
- })
-
 export const User = Type.Object({
     ...userImportantInfo,
     email: Type.String({ format: 'email' }),
@@ -40,5 +32,4 @@ export const ReturnUser = Type.Object({
 
 export type userLoginType = Static<typeof UserLogin>
 export type userCreateType = Static<typeof User>
-export type returnTokenType = Static<typeof returnToken>
 export type returnUserType = Static<typeof ReturnUser>
