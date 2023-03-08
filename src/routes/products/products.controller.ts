@@ -1,17 +1,19 @@
 import { ObjectId } from 'mongodb';
 // import { ObjectID } from 'typeorm';
 import { FastifyRequest, FastifyReply } from 'fastify'
-import { ProducType, editProductType, paramsIDType, responseProduct } from './products.schema'
+import { ProducType, editProductType, paramsIDType } from './products.schema'
 
-export const products = async (req: FastifyRequest<{
+export const findAll = async (req: FastifyRequest<{
     Body: ProducType
 }>, rep: FastifyReply) => {
 
     try {
-        const pR = await req.db.product.find();
+        const products = await req.db.product.find();
     
         rep.status(200).send({
-            products: pR
+            status: 200,
+            products,
+            message: 'Sucessfully get all products'
         })
     } catch(e: any) {
         rep.status(500).send({ 
@@ -21,6 +23,17 @@ export const products = async (req: FastifyRequest<{
          })
     }
 
+}
+
+export const findOne = async (req: FastifyRequest<{
+    Params: paramsIDType
+}>, rep: FastifyReply) => {
+    const product = await req.db.product.findOneBy(req.params.id)
+    rep.send({
+        status: 200,
+        product,
+        message: 'Successfully get product'
+    })
 }
 
 export const create = async (req: FastifyRequest<{
@@ -50,24 +63,26 @@ export const edit =  async (req: FastifyRequest<{
     Body: editProductType,
     Params: paramsIDType
 }>, rep: FastifyReply) => {
-    // try {
-        const dates = req.body
-        if(!Object.keys(dates).length) {
-            rep.status(400).send({
-                status: 400,
-                message: 'At least 1 parameter is needed. Body/name/description/price/photo'
-            })
-        }
-        await req.db.product.update(req.params.id, { ...dates } )
-
-        rep.status(200).send({
-            status: 200,
-            message: 'Update successfully product'
+    const dates = req.body
+    if(!Object.keys(dates).length) {
+        rep.status(400).send({
+            status: 400,
+            message: 'At least 1 parameter is needed. Body/name/description/price/photo'
         })
-    // } catch(err: any) {
-    //     rep.status(500).send({
-    //         message: err.message,
-    //         status: 500
-    //     })
-    // }
+    }
+    await req.db.product.update({ id: req.params.id }, { ...dates })
+    rep.status(200).send({
+        status: 200,
+        message: 'Update successfully product'
+    })
+}
+
+export const deleteProduct = async (req: FastifyRequest<{
+    Params:  paramsIDType
+}>, rep: FastifyReply) => {
+    await req.db.product.delete({ id: req.params.id })
+    rep.status(200).send({
+        status: 200,
+        message: 'Delete successfully product'
+    })
 }

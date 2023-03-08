@@ -8,7 +8,7 @@ export const defaultReturn = Type.Object({
 })
 
 export const Error = Type.Object({
-    status: Type.Optional(Type.Number()),
+    status: Type.Number(),
     message: Type.String(),
     error: Type.Optional(Type.Any())
 })

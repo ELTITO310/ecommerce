@@ -12,7 +12,7 @@ export const Product = Type.Object({
     $id: 'product'
 })
 
-export const responseProduct = Type.Object({
+export const responseProducts = Type.Object({
     products: Type.Array(Product)
 })
 

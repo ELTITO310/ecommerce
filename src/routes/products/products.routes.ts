@@ -1,6 +1,6 @@
 import { FastifyInstance } from 'fastify'
-import { products, edit, create } from './products.controller'
-import { responseProduct, editProduct, Product, paramsID } from './products.schema'
+import { findAll, edit, create, deleteProduct, findOne } from './products.controller'
+import { responseProducts, editProduct, Product, paramsID } from './products.schema'
 import { Error, defaultReturn } from '../../types/api'
 
 export default async function routes(fastify: FastifyInstance, options: Object) {
@@ -9,14 +9,27 @@ export default async function routes(fastify: FastifyInstance, options: Object) 
         schema: {
             tags: ['products'],
             response: {
-                200: responseProduct,
+                200: defaultReturn,
                 500: {
                     description: 'Error response',
                     ...Error
                 }
             }
         }
-    }, products)
+    }, findAll)
+
+    fastify.get('/:id', {
+        schema: {
+            tags: ['products'],
+            response: {
+                200: defaultReturn,
+                '5xx': {
+                    description: 'Error Response',
+                    ...Error
+                }
+            }
+        }
+    }, findOne)
 
     fastify.post('/create', {
         preHandler: fastify.admin,
@@ -32,7 +45,7 @@ export default async function routes(fastify: FastifyInstance, options: Object) 
             }
         }
     }, create)
-
+    
     fastify.put('/edit/:id', {
         preHandler: fastify.admin,
         schema: {
@@ -48,5 +61,20 @@ export default async function routes(fastify: FastifyInstance, options: Object) 
             }
         },
     }, edit)
-
+    
+    fastify.delete('/delete/:id', {
+        preHandler: fastify.admin,
+        schema: {
+            tags: ['products'],
+            params: paramsID,
+            response: {
+                200: defaultReturn,
+                500: {
+                    description: 'Error response',
+                    ...Error
+                }
+            }
+        }
+    }, deleteProduct)
+    
 }

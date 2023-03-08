@@ -4,7 +4,7 @@ import dotenv from 'dotenv';
 dotenv.config()
 import Fastify from 'fastify';
 /* Plugins  */
-import { TypeBoxTypeProvider, TypeBoxValidatorCompiler } from '@fastify/type-provider-typebox';
+import { TypeBoxTypeProvider } from '@fastify/type-provider-typebox';
 import cors from '@fastify/cors'
 import typeOrmPlugin from './plugins/typeorm'
 import jwt from './plugins/jwt'
@@ -14,10 +14,14 @@ import ApiRoute from './routes/products/products.routes'
 import AuthRoute from './routes/users/users.routes'
 /* Start */
 import logger from './utils/logger';
+import handlingError from './hooks/handlingError';
 
 const fastify = Fastify({
-    logger: logger
+    logger: logger,
 }).withTypeProvider<TypeBoxTypeProvider>()
+
+// console.log(fastify.errorHandler.toString())
+// fastify.addHook('onError', handlingError)
 
 // Plugins
 fastify.register(jwt)
@@ -29,15 +33,17 @@ fastify.register(swagger)
 //         const hostname = new URL(origin).hostname
 //         console.log('hostname', hostname)
 //         if(hostname === 'localhost') {
-//             cb(null, true)
-//             return;
-//         }
-//         cb(new Error('Not allowed'), false)
-//     },
-// })
-// Routes
+    //             cb(null, true)
+    //             return;
+    //         }
+    //         cb(new Error('Not allowed'), false)
+    //     },
+    // })
+    // Routes
+// fastify.setErrorHandler(handlingError)
 fastify.register(AuthRoute, { prefix: 'api/users' })
 fastify.register(ApiRoute, { prefix: 'api/products' });
+
 
 (async() => {
     try {
