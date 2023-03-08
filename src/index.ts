@@ -40,7 +40,7 @@ fastify.register(swagger)
     //     },
     // })
     // Routes
-// fastify.setErrorHandler(handlingError)
+fastify.setErrorHandler(handlingError)
 fastify.register(AuthRoute, { prefix: 'api/users' })
 fastify.register(ApiRoute, { prefix: 'api/products' });
 
