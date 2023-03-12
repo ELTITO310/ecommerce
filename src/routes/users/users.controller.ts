@@ -24,6 +24,7 @@ export const signIn = async (req: FastifyRequest<{
                 id: user._id.toString(),
                 name: user.name,
                 lastname: user.lastname,
+                email: user.email
             }, token }
         }
 
