@@ -20,7 +20,6 @@ const fastify = Fastify({
     logger: logger,
 }).withTypeProvider<TypeBoxTypeProvider>()
 
-// console.log(fastify.errorHandler.toString())
 // fastify.addHook('onError', handlingError)
 
 // Plugins
@@ -47,7 +46,7 @@ fastify.register(ApiRoute, { prefix: 'api/products' });
 
 (async() => {
     try {
-        await fastify.listen({ port: ((process.env.PORT || 4000) as number) })
+        await fastify.listen({ port: ((process.env.PORT || 4000) as number), host: '0.0.0.0' })
         fastify.log.info(`Run! Server http://localhost:${process.env.PORT}`)
     } catch(err) {
         fastify.log.error(err)
