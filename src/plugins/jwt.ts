@@ -1,7 +1,6 @@
 import fp from 'fastify-plugin';
 import { FastifyPluginAsync, FastifyRequest, FastifyReply } from 'fastify'
-import { JWT } from '@fastify/jwt'
-import jwt from '@fastify/jwt'
+import jwt, { JWT } from '@fastify/jwt'
 
 declare module 'fastify' {
     interface FastifyRequest {

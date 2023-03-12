@@ -6,7 +6,7 @@ import { hashPassword, verifyPassword } from '../../utils/hash'
 export const signIn = async (req: FastifyRequest<{
     Body: userLoginType
 }>, rep: FastifyReply) => {
-    try {
+    // try {
         const { email, password } = req.body
 
         const user = await req.db.user.findOneBy({ email })
@@ -31,9 +31,9 @@ export const signIn = async (req: FastifyRequest<{
         return rep.code(400).send({ 
             message: 'Email or Password invalid'
         })
-    } catch(err: any) {
-        rep.status(500).send({ status: 500, message: err.message })
-    }
+    // } catch(err: any) {
+    //     rep.status(500).send({ status: 500, message: err.message })
+    // }
 }
 
 

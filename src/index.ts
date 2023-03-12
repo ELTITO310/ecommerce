@@ -6,6 +6,7 @@ import Fastify from 'fastify';
 /* Plugins  */
 import { TypeBoxTypeProvider } from '@fastify/type-provider-typebox';
 import cors from '@fastify/cors'
+import sensible from '@fastify/sensible'
 import typeOrmPlugin from './plugins/typeorm'
 import jwt from './plugins/jwt'
 import swagger from './plugins/swagger'
@@ -23,6 +24,7 @@ const fastify = Fastify({
 // fastify.addHook('onError', handlingError)
 
 // Plugins
+fastify.register(sensible)
 fastify.register(jwt)
 fastify.register(typeOrmPlugin);
 fastify.register(swagger)
