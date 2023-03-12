@@ -20,12 +20,17 @@ export const signIn = async (req: FastifyRequest<{
             const token = req.jwt.sign({ id: user._id.toString() }, { 
                 expiresIn: 1000 * 60 * 60 * 24 * 7
             })
-            return { user: {
-                id: user._id.toString(),
-                name: user.name,
-                lastname: user.lastname,
-                email: user.email
-            }, token }
+            return { 
+                user: {
+                    id: user._id.toString(),
+                    name: user.name,
+                    lastname: user.lastname,
+                    email: user.email
+                }, 
+                token, 
+                status: 201,
+                message: "Successfully signin"
+            }
         }
 
         return rep.code(400).send({ 
