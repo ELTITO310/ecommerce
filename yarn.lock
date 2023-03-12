@@ -1486,10 +1486,10 @@ fastfall@^1.5.0:
   dependencies:
     reusify "^1.0.0"
 
-fastify-cli@^5.7.0:
-  version "5.7.0"
-  resolved "https://registry.yarnpkg.com/fastify-cli/-/fastify-cli-5.7.0.tgz#2075f794c7023ea4a50b961ae5f901832d8d5209"
-  integrity sha512-mLQfyA1oAtK70voA9eYnYVVKAuKdSWkfcrj93EmX2b+sAMynPIbItqAajBXrPCMvARPgdJ3aHSANdyY8OLFhWg==
+fastify-cli@^5.7.1:
+  version "5.7.1"
+  resolved "https://registry.yarnpkg.com/fastify-cli/-/fastify-cli-5.7.1.tgz#2563718df61f91c9d3a4a5416d91d96454f2a862"
+  integrity sha512-0FgQux1TK+zsRxVLDCF4F+x2ilHDeaJB2TouHIHWRS0+cM6aC+bBSqHva/myrlZs/1lQCAe294DvZkAuJyHySw==
   dependencies:
     "@fastify/deepmerge" "^1.2.0"
     chalk "^4.1.2"
@@ -1513,6 +1513,11 @@ fastify-plugin@^4.0.0, fastify-plugin@^4.4.0:
   version "4.4.0"
   resolved "https://registry.yarnpkg.com/fastify-plugin/-/fastify-plugin-4.4.0.tgz#ce9fab1352390199c3d55569fea43779699b58ae"
   integrity sha512-ovwFQG2qNy3jcCROiWpr94Hs0le+c7N/3t7m9aVwbFhkxcR/esp2xu25dP8e617HpQdmeDv+gFX4zagdUhDByw==
+
+fastify-tsconfig@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/fastify-tsconfig/-/fastify-tsconfig-1.0.1.tgz#ec90e45fa8aa72b81178757bd5940c7875037639"
+  integrity sha512-BXkTG3JYcjJb3xX5R5FcE9ciscV/h7YtmnkiSaNAONd1g6ooMSN/4GWfhA8hnS6SRZFYBBxsn8719Mj9lbCOtA==
 
 fastify@^4.0.0:
   version "4.11.0"
