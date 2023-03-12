@@ -27,18 +27,18 @@ const fastify = Fastify({
 fastify.register(jwt)
 fastify.register(typeOrmPlugin);
 fastify.register(swagger)
-fastify.register(cors, {
-    origin: (origin, cb) => {
-        console.log('origin', origin)
-        const hostname = new URL(origin).hostname
-        console.log('hostname', hostname)
-        if(hostname === 'localhost') {
-                cb(null, true)
-                return;
-            }
-            cb(new Error('Not allowed'), false)
-        },
-    })
+// fastify.register(cors, {
+//     origin: (origin, cb) => {
+//         console.log('origin', origin)
+//         const hostname = new URL(origin).hostname
+//         console.log('hostname', hostname)
+//         if(hostname === 'localhost') {
+//                 cb(null, true)
+//                 return;
+//             }
+//             cb(new Error('Not allowed'), false)
+//         },
+//     })
     // Routes
 fastify.setErrorHandler(handlingError)
 fastify.register(AuthRoute, { prefix: 'api/users' })
