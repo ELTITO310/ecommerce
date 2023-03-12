@@ -9,7 +9,7 @@
   "scripts": {
     "dev": "nodemon src/index.ts",
     "build": "tsc",
-    "start": "fastify start -l info dist/index.js"
+    "start": "fastify start dist/index.js"
   },
   "dependencies": {
     "@fastify/cors": "^8.2.0",
