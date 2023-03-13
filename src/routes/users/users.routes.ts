@@ -1,7 +1,7 @@
 import { FastifyInstance } from 'fastify'
 import { User as UserCreate, UserLogin } from './users.schema'
 import { signIn, signUp } from './users.controller'
-import { defaultReturn, Error } from '../../types/api'
+import { defaultReturn, Error as ErrorObject } from '../../types/api'
 
 export default async function routes(fastify: FastifyInstance, options: Object) {
 
@@ -13,7 +13,7 @@ export default async function routes(fastify: FastifyInstance, options: Object) 
                 200: defaultReturn,
                 500: {
                     description: 'Error response',
-                    ...Error
+                    ...ErrorObject
                 }
             }
         }
@@ -28,11 +28,15 @@ export default async function routes(fastify: FastifyInstance, options: Object) 
                 201: defaultReturn,
                 500: {
                     description: 'Error response',
-                    ...Error
+                    ...ErrorObject
                 }
             }
         },
     }, signUp)
+
+    fastify.get('/error', (req, rep) => {
+        throw new Error('la grasa volvio')
+    })
 
 
 }

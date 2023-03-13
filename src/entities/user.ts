@@ -1,4 +1,5 @@
-import { Entity, ObjectID, ObjectIdColumn, Column } from 'typeorm';
+import { Entity, ObjectIdColumn, Column } from 'typeorm';
+import { ObjectId } from 'mongodb';
 import { IsEmail } from 'class-validator'
 
 export class ShopCart {
@@ -14,7 +15,7 @@ export class ShopCart {
 @Entity()
 export class User {
     @ObjectIdColumn()
-    _id: ObjectID
+    _id: ObjectId
 
     @Column()
     name: string
