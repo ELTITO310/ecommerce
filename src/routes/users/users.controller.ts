@@ -48,7 +48,7 @@ export const signUp = async (req: FastifyRequest<{
         if(err.message.includes('duplicate')) return rep.badRequest('The user already exist')
         throw rep.internalServerError(err.name)
     }
-        return rep.code(201).send({
+    return rep.code(201).send({
         status: 201,
         message: 'User created successfully'
     })
