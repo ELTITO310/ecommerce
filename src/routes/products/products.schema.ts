@@ -23,10 +23,5 @@ export const editProduct = Type.Object({
     description: Type.Optional(Type.String())
 })
 
-export const paramsID = Type.Object({
-    id: Type.String()
-})
-
 export type editProductType = Static<typeof editProduct>
 export type ProducType = Static<typeof Product>
-export type paramsIDType = Static<typeof paramsID>

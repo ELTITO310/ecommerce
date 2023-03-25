@@ -1,7 +1,7 @@
 import { FastifyInstance } from 'fastify'
 import { User as UserCreate, UserLogin } from './users.schema'
-import { signIn, signUp } from './users.controller'
-import { responseDefault } from '../../types/api'
+import { signIn, signUp, user } from './users.controller'
+import { responseDefault, paramsID } from '../../types/api'
 
 export default async function routes(fastify: FastifyInstance, options: Object) {
 
@@ -21,5 +21,12 @@ export default async function routes(fastify: FastifyInstance, options: Object) 
             response: responseDefault()
         },
     }, signUp)
+
+    fastify.get('/:id', {
+        schema: {
+            tags: ['user'],
+            params: paramsID
+        }
+    }, user)
 
 }

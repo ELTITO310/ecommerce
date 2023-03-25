@@ -1,7 +1,7 @@
 import { FastifyInstance } from 'fastify'
 import { findAll, edit, create, deleteProduct, findOne } from './products.controller'
-import { editProduct, Product, paramsID } from './products.schema'
-import { responseDefault } from '../../types/api'
+import { editProduct, Product } from './products.schema'
+import { responseDefault, paramsID } from '../../types/api'
 
 export default async function routes(fastify: FastifyInstance, options: Object) {
     

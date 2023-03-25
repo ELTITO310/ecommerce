@@ -1,5 +1,7 @@
 import { FastifyRequest, FastifyReply } from 'fastify'
-import { ProducType, editProductType, paramsIDType } from './products.schema'
+import { ProducType, editProductType } from './products.schema'
+
+import { paramsIDType } from '../../types/api'
 
 export const findAll = async (req: FastifyRequest<{
     Body: ProducType
@@ -46,6 +48,7 @@ export const edit =  async (req: FastifyRequest<{
     Body: editProductType,
     Params: paramsIDType
 }>, rep: FastifyReply) => {
+    console.log(req.user)
     const dates = req.body
     if(!Object.keys(dates).length) {
         rep.status(400).send({

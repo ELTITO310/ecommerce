@@ -2,6 +2,7 @@ import { FastifyRequest, FastifyReply } from 'fastify'
 import { userCreateType, userLoginType } from './users.schema'
 import { User } from '../../entities/user';
 import { hashPassword, verifyPassword } from '../../utils/hash'
+import { paramsIDType } from '../../types/api'
 
 export const signIn = async (req: FastifyRequest<{
     Body: userLoginType
@@ -52,4 +53,40 @@ export const signUp = async (req: FastifyRequest<{
         status: 201,
         message: 'User created successfully'
     })
+}
+
+export const user = async (req: FastifyRequest<{
+    Params: paramsIDType
+}>, rep: FastifyReply) => {
+    const [errToken, token] = await req.to(req.jwtVerify())
+    const message = {
+        message: 'Get user succesfully',
+        statuts: 200
+    }
+
+    if(errToken) {
+        const [err, user] = await req.to(req.db.user.findOneBy(req.params.id))
+        if(!user) return rep.notFound('User not found')
+        if(err) throw rep.internalServerError(err.name)
+        return {
+            ...message,
+            user: {
+                id: user._id,
+                name: user.name,
+                lastname: user.lastname
+            }
+        }
+    }
+
+    const [err, user] = await req.to(req.db.user.findOneBy(req.params.id))
+    if(!user) return rep.notFound('User not found')
+    if(err) throw rep.internalServerError(err.name)
+    const { password, ...res } = user
+
+    return {
+        ...message,
+        user: {
+            ...res
+        }
+    }
 }

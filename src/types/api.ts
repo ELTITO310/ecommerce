@@ -26,10 +26,10 @@ export const responseDefault = (aditionalResp: Record<number, any> = {}) => {
         }
 }
 
+export const paramsID = Type.Object({
+    id: Type.String()
+})
 
-export interface RouteOpts<Opts extends RequestGenericInterface = RouteGenericInterface> {
-    (req: FastifyRequest<Opts>, rep: FastifyReply): any
-} 
-
+export type paramsIDType = Static<typeof paramsID>
 export type errorType = Static<typeof Error>
 export type defaultReturn = Static<typeof defaultReturn>
