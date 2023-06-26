@@ -10,8 +10,6 @@ const Slide = ({ children, className, automatic = true }: {
 
     const ch = Children.toArray(children).flat()
     const [view, setView] = useState(1)
-    
-    console.log(view)
 
     const nextView = () => setView(view => view === ch.length ? 1 : view+1)
     const backView = () => setView(view => view === ch.length ? 1 : view+1)
@@ -33,7 +31,7 @@ const Slide = ({ children, className, automatic = true }: {
                     onClick={backView}>
                 <AiFillCaretLeft />
             </button>
-            <ul className={`h-full inline-flex z-10 transition-transform`} style={{ 
+            <ul className={`h-full relative inline-flex z-10 transition-transform`} style={{ 
                 width: `${ch.length * 100}%`,
                 transform: `translateY(0px) translateX(-${(100 / ch.length) * (view - 1)}%)`
                 }}>

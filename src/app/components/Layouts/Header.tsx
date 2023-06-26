@@ -2,7 +2,7 @@ import Link from 'next/link'
 
 const Header = () => {
     return ( <header className="grid grid-cols-3 place-items-center py-4 font-light text-sm">
-        <h1 className="font-extrabold text-xl">ECOMMERCE</h1>
+        <h1 className="font-bold text-xl">ECOMMERCE</h1>
         <nav>
             <ul className="inline-flex gap-2">
                 <li><Link href='/'>Home</Link></li>
